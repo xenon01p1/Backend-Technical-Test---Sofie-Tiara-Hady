@@ -3,6 +3,7 @@ import type {
   CreateProductRequest,
   Product,
   UpdateProductRequest,
+  ProductFilter,
 } from '../types/product.js';
 import { AppError } from '../utils/app-error.js';
 
@@ -20,6 +21,12 @@ export const createProduct = async (
   }
 
   return productRepository.createProduct(data);
+};
+
+export const getProductsByCursor = async (
+  filter: ProductFilter
+): Promise<Product[]> => {
+  return productRepository.getProductsByCursor(filter);
 };
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -94,5 +101,7 @@ export const deleteProduct = async (
     );
   }
 
-  return productRepository.deactivateProduct(id) as Promise<Product>;
+  await productRepository.deleteProduct(id);
+
+  return product;
 };

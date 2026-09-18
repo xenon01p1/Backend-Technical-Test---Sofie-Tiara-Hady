@@ -7,6 +7,9 @@ export const createProduct = async (data) => {
     }
     return productRepository.createProduct(data);
 };
+export const getProductsByCursor = async (filter) => {
+    return productRepository.getProductsByCursor(filter);
+};
 export const getProducts = async () => {
     return productRepository.getProducts();
 };
@@ -39,5 +42,6 @@ export const deleteProduct = async (id) => {
     if (!product) {
         throw new AppError(404, 'PRODUCT_NOT_FOUND', 'Product not found.');
     }
-    return productRepository.deactivateProduct(id);
+    await productRepository.deleteProduct(id);
+    return product;
 };

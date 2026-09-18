@@ -3,8 +3,8 @@ import type {
   CreateProductRequest,
   Product,
   UpdateProductRequest,
+  ProductFilter
 } from '../types/product.js';
-import mysql from 'mysql2/promise';
 
 export const createProduct = async (
   data: CreateProductRequest
@@ -138,4 +138,66 @@ export const deactivateProduct = async (
   );
 
   return getProductById(id);
+};
+
+export const deleteProduct = async (
+  id: number
+): Promise<void> => {
+  await db.execute(
+    `
+      DELETE FROM products
+      WHERE id = ?
+    `,
+    [id]
+  );
+};
+
+export const getProductsByCursor = async (
+  filter: ProductFilter
+): Promise<Product[]> => {
+  const conditions: string[] = [];
+  const values: (string | number | boolean)[] = [];
+
+  if (filter.name) {
+    conditions.push('name LIKE ?');
+    values.push(`%${filter.name}%`);
+  }
+
+  if (filter.sku) {
+    conditions.push('sku LIKE ?');
+    values.push(`%${filter.sku}%`);
+  }
+
+  if (filter.unit) {
+    conditions.push('unit = ?');
+    values.push(filter.unit);
+  }
+
+  if (filter.is_active !== undefined) {
+    conditions.push('is_active = ?');
+    values.push(filter.is_active);
+  }
+
+  if (filter.cursor) {
+    conditions.push('id < ?');
+    values.push(filter.cursor);
+  }
+
+  const whereClause =
+    conditions.length > 0
+      ? `WHERE ${conditions.join(' AND ')}`
+      : '';
+
+  const [rows] = await db.execute(
+    `
+      SELECT *
+      FROM products
+      ${whereClause}
+      ORDER BY id DESC
+      LIMIT ?
+    `,
+    [...values, filter.limit ?? 10]
+  );
+
+  return rows as Product[];
 };

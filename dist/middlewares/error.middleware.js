@@ -2,10 +2,11 @@ import { ZodError } from 'zod';
 import { AppError } from '../utils/app-error.js';
 export const errorMiddleware = (error, _req, res, _next) => {
     if (error instanceof ZodError) {
+        const issue = error.issues[0];
         res.status(400).json({
             error: {
                 code: 'VALIDATION_ERROR',
-                message: error.issues[0]?.message ?? 'Invalid request data.',
+                message: `value ${issue.path.join('.')} is missing`,
             },
         });
         return;

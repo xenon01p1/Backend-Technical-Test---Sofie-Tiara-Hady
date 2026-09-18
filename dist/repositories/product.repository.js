@@ -80,3 +80,44 @@ export const deactivateProduct = async (id) => {
     `, [id]);
     return getProductById(id);
 };
+export const deleteProduct = async (id) => {
+    await db.execute(`
+      DELETE FROM products
+      WHERE id = ?
+    `, [id]);
+};
+export const getProductsByCursor = async (filter) => {
+    const conditions = [];
+    const values = [];
+    if (filter.name) {
+        conditions.push('name LIKE ?');
+        values.push(`%${filter.name}%`);
+    }
+    if (filter.sku) {
+        conditions.push('sku LIKE ?');
+        values.push(`%${filter.sku}%`);
+    }
+    if (filter.unit) {
+        conditions.push('unit = ?');
+        values.push(filter.unit);
+    }
+    if (filter.is_active !== undefined) {
+        conditions.push('is_active = ?');
+        values.push(filter.is_active);
+    }
+    if (filter.cursor) {
+        conditions.push('id < ?');
+        values.push(filter.cursor);
+    }
+    const whereClause = conditions.length > 0
+        ? `WHERE ${conditions.join(' AND ')}`
+        : '';
+    const [rows] = await db.execute(`
+      SELECT *
+      FROM products
+      ${whereClause}
+      ORDER BY id DESC
+      LIMIT ?
+    `, [...values, filter.limit ?? 10]);
+    return rows;
+};
