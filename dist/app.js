@@ -3,6 +3,7 @@ import productRoutes from './routes/product.routes.js';
 import { errorMiddleware } from './middlewares/error.middleware.js';
 import authRoutes from './routes/auth.routes.js';
 import supplierRoutes from './routes/supplier.routes.js';
+import warehouseRoutes from './routes/warehouse.routes.js';
 const app = express();
 app.use(express.json());
 app.get('/health', (_req, res) => {
@@ -14,5 +15,6 @@ app.get('/health', (_req, res) => {
 app.use('/products', productRoutes);
 app.use('/auth', authRoutes);
 app.use('/suppliers', supplierRoutes);
+app.use('/warehouses', warehouseRoutes);
 app.use(errorMiddleware);
 export default app;
