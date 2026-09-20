@@ -2,7 +2,6 @@ export interface Product {
   id: number;
   sku: string;
   name: string;
-  stock: number;
   unit: string;
   is_active: boolean;
   created_at: Date;
@@ -13,13 +12,11 @@ export interface CreateProductRequest {
   sku: string;
   name: string;
   unit: string;
-  stock: number;
 }
 
 export interface UpdateProductRequest {
   sku?: string;
   name?: string;
-  stock?: number;
   unit?: string;
   is_active?: boolean;
 }

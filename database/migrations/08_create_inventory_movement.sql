@@ -3,7 +3,7 @@ CREATE TABLE inventory_movements (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     warehouse_id BIGINT UNSIGNED NOT NULL,
     product_id BIGINT UNSIGNED NOT NULL,
-    movement_type ENUM('IN', 'OUT', 'TRANSFER', 'ADJUSTMENT') NOT NULL,
+    movement_type ENUM('PURCHASE_RECEIPT') NOT NULL,
     quantity INT NOT NULL,
     reference VARCHAR(100) NULL,
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
