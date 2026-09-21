@@ -91,7 +91,6 @@ evindo_test2/
 │   ├── purchase-order/
 │   └── goods-receipt/
 │
-├── docs/
 ├── .env.example
 ├── .gitignore
 ├── package.json
@@ -133,6 +132,14 @@ ERD project dapat dilihat pada:
 * `purchase_order_items`
 * `goods_receipts`
 * `goods_receipt_items`
+
+- **products ↔ warehouses** berelasi many-to-many lewat `inventories` (satu baris per pasangan produk-gudang, dijaga `UNIQUE`). Kolom `stock` di `products` sudah dihapus karena stok kini dicatat per gudang.
+- **users → purchase_requests**: `requested_by` adalah pembuat PR, `approved_by` adalah approver (boleh `NULL`, menjadi `NULL` jika user dihapus).
+- **purchase_requests → purchase_orders**: relasi one-to-one (`UNIQUE purchase_request_id`), satu PR hanya bisa menjadi satu PO.
+- **purchase_orders → goods_receipts**: one-to-many, sehingga satu PO bisa diterima bertahap (partial receipt).
+- **inventory_movements** terhubung ke `products` dan `warehouses`. Kolom `reference` berupa teks bebas (bukan foreign key) untuk menyimpan nomor dokumen terkait.
+- Tabel `*_items` ikut terhapus jika induknya dihapus (`ON DELETE CASCADE`), sedangkan relasi ke master data dan dokumen utama dilindungi (`ON DELETE RESTRICT`).
+
 
 ## Role & Authorization
 
