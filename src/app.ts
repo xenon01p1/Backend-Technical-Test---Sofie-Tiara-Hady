@@ -10,6 +10,9 @@ import purchaseRequestRouter from './routes/purchase-request.route.js';
 import purchaseOrderRouter from './routes/purchase-order.routes.js';
 import goodsReceiptRouter from './routes/goods-receipt.routes.js';
 
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger.js';
+
 const app = express();
 
 app.use(express.json());
@@ -31,6 +34,9 @@ app.use('/purchase-requests', purchaseRequestRouter);
 app.use('/purchase-orders', purchaseOrderRouter);
 app.use('/goods-receipts', goodsReceiptRouter);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(errorMiddleware);
 
 export default app;
+
