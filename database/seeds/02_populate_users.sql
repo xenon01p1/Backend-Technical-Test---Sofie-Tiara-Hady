@@ -2,23 +2,23 @@ INSERT INTO users (username, pass, email, phone, role, is_active)
 VALUES 
   (
     'john_staff',
-    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.', -- 'password123'
+    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.',
     'john.staff@company.com',
     '+6281234567890',
-    'STAFF',
+    'USER',
     true
   ),
   (
     'jane_staff',
-    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.', -- 'password123'
+    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.',
     'jane.staff@company.com',
     '+6281234567891',
-    'STAFF',
+    'USER',
     true
   ),
   (
     'alex_approver',
-    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.', -- 'password123'
+    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.',
     'alex.approver@company.com',
     '+6281234567892',
     'APPROVER',
@@ -26,7 +26,7 @@ VALUES
   ),
   (
     'sarah_approver',
-    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.', -- 'password123'
+    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.',
     'sarah.approver@company.com',
     '+6281234567893',
     'APPROVER',
@@ -34,9 +34,9 @@ VALUES
   ),
   (
     'inactive_staff',
-    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.', -- 'password123'
+    '$2a$12$e8N3/G11Q3J.3cO9A21C0e/oO3d.N3X6zU5oJ6Qe0fM3C2B1A0x9.',
     'inactive.staff@company.com',
     '+6281234567894',
-    'STAFF',
+    'ADMIN',
     false
   );

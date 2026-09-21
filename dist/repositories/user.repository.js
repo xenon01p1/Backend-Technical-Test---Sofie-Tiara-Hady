@@ -31,7 +31,7 @@ export const getUserById = async (id) => {
     const users = rows;
     return users[0] ?? null;
 };
-export const createUser = async (username, email, hashedPassword, phone) => {
+export const createUser = async (username, email, hashedPassword, role, phone) => {
     const [result] = await db.execute(`
       INSERT INTO users (
         username,
@@ -41,8 +41,8 @@ export const createUser = async (username, email, hashedPassword, phone) => {
         role,
         is_active
       )
-      VALUES (?, ?, ?, ?, 'STAFF', 1)
-    `, [username, email, hashedPassword, phone ?? null]);
+      VALUES (?, ?, ?, ?, ?, 1)
+    `, [username, email, hashedPassword, phone ?? null, role]);
     const insertId = result.insertId;
     const user = await getUserById(insertId);
     return user;

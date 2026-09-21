@@ -49,6 +49,7 @@ export const register = async (
     data.username,
     data.email,
     hashedPassword,
+    data.role,
     data.phone
   );
 };

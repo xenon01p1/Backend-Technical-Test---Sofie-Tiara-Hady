@@ -16,7 +16,7 @@ export const register = async (data) => {
         throw new AppError(409, 'EMAIL_ALREADY_EXISTS', 'Email already exists.');
     }
     const hashedPassword = await bcrypt.hash(data.password, 10);
-    return userRepository.createUser(data.username, data.email, hashedPassword, data.phone);
+    return userRepository.createUser(data.username, data.email, hashedPassword, data.role, data.phone);
 };
 export const login = async (data) => {
     const user = await userRepository.getUserByUsername(data.username);

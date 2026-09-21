@@ -2,6 +2,7 @@ export interface RegisterRequest {
   username: string;
   email: string;
   password: string;
+  role: string;
   phone?: string;
 }
 
@@ -12,5 +13,5 @@ export interface LoginRequest {
 
 export interface JwtPayload {
   userId: number;
-  role: 'STAFF' | 'APPROVER';
+  role: 'USER' | 'APPROVER' | 'ADMIN';
 }

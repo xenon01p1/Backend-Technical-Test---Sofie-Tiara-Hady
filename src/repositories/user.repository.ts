@@ -65,6 +65,7 @@ export const createUser = async (
   username: string,
   email: string,
   hashedPassword: string,
+  role: string,
   phone?: string
 ): Promise<User> => {
   const [result] = await db.execute(
@@ -77,9 +78,9 @@ export const createUser = async (
         role,
         is_active
       )
-      VALUES (?, ?, ?, ?, 'STAFF', 1)
+      VALUES (?, ?, ?, ?, ?, 1)
     `,
-    [username, email, hashedPassword, phone ?? null]
+    [username, email, hashedPassword, phone ?? null, role]
   );
 
   const insertId = (result as { insertId: number }).insertId;

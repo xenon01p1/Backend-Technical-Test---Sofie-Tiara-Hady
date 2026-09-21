@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { createPurchaseOrder, getPurchaseOrders, getPurchaseOrderById, markPurchaseOrderAsOrdered, } from '../controllers/purchase-order.controller.js';
+import { authenticate } from '../middlewares/auth.middleware.js';
+import { authorize } from '../middlewares/role.middleware.js';
+const router = Router();
+router.post('/', authenticate, authorize('USER'), createPurchaseOrder);
+router.get('/', authenticate, authorize('USER', 'APPROVER', 'ADMIN'), getPurchaseOrders);
+router.get('/:id', authenticate, authorize('USER', 'APPROVER', 'ADMIN'), getPurchaseOrderById);
+router.post('/:id/order', authenticate, authorize('USER'), markPurchaseOrderAsOrdered);
+export default router;

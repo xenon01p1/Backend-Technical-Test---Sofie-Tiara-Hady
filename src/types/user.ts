@@ -3,8 +3,10 @@ export interface User {
   username: string;
   email: string;
   phone: string | null;
-  role: 'STAFF' | 'APPROVER';
+  role: 'USER' | 'APPROVER' | 'ADMIN';
   is_active: boolean;
   created_at: Date;
   updated_at: Date;
 }
+
+export type UserRole = 'USER' | 'APPROVER' | 'ADMIN';

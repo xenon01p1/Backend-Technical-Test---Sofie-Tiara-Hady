@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 import type { JwtPayload } from '../types/auth.js';
+import { AppError } from '../utils/app-error.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -18,13 +19,21 @@ export const authenticate = (
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-      throw new Error('Missing authorization header.');
+      throw new AppError(
+        401,
+        'UNAUTHORIZED',
+        'Authentication token is required.'
+      );
     }
 
     const [type, token] = authHeader.split(' ');
 
     if (type !== 'Bearer' || !token) {
-      throw new Error('Invalid authorization header.');
+      throw new AppError(
+        401,
+        'INVALID_TOKEN',
+        'Invalid authentication token.'
+      );
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
@@ -32,9 +41,18 @@ export const authenticate = (
     req.user = decoded;
 
     next();
-  } catch {
+  } catch (error) {
+    if (error instanceof AppError) {
+      next(error);
+      return;
+    }
+
     next(
-      new Error('Invalid or expired authentication token.')
+      new AppError(
+        401,
+        'INVALID_TOKEN',
+        'Invalid or expired authentication token.'
+      )
     );
   }
 };
